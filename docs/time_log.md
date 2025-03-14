@@ -5,3 +5,4 @@
 2025-03-13 | Set up styles.css        | 10 min     | Created basic styles.css file and settings.
 2025-03-13 | basic ball bouncing logic | 1hr40min |  Created a basic ball bouncing logic / had some issues with the ball remaining static , fixed it with css relative property.
 2025-03-13 | bounce tracking , counting | 1 hr | Added logic for counting bounces and tracking on which wallt he bounce happaned , added base version of question asking.
+2025-03-14 | Reponse time tracker , score and multiple rounds | 1hr | Implemented Response time tracking, scoring system and multiple round option
