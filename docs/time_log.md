@@ -7,3 +7,4 @@
 2025-03-13 | bounce tracking , counting | 1 hr | Added logic for counting bounces and tracking on which wall the bounce happaned , added base version of question asking.
 2025-03-14 | Response time tracker , score and multiple rounds | 1hr | Implemented Response time tracking, scoring system and multiple round option
 2025-03-14 | keyboard, score ui , time ui, round ui | 1hr | Bigger refactor to game start,continue,reset,askquestion logic to implement on screen keyboard and start continue buttons
+2025-03-14 | Fixed spammable buttons | 20 min | Fixed issue where on screen keyboard was spammable also tweaked logic that handles hiding and showing buttons
