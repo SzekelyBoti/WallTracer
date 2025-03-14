@@ -22,3 +22,6 @@ body, html {
     background-color: #3498db;
     border-radius: 50%;
 }
+.hidden {
+    display: none;
+}
