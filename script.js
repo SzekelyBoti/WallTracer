@@ -20,7 +20,6 @@ let score =0;
 let currentRound = 1;
 let startTime, responseTime;
 let animationFrameId;
-
 function setInitialPosition() {
     ball.style.left =`${ballX}px`;
     ball.style.top = `${ballY}px`;
@@ -70,9 +69,12 @@ function askQuestion() {
     document.getElementById("question-container").classList.remove("hidden");
 }
 function selectAnswer(answer){
+    disableButtons();
     responseTime = (Date.now() - startTime) / 1000;
     checkAnswer(answer);
     document.getElementById("question-container").classList.add("hidden");
+    document.getElementById("continue-btn").disabled = false;
+    document.getElementById("continue-btn").classList.remove("hidden");
 }
 function checkAnswer(answer){
     if(answer === bounceTimes[questionBounceIndex - 1]){
@@ -97,13 +99,16 @@ function resetGame(){
     document.getElementById("score").innerText = "0";
     document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
     document.getElementById("response-time").innerText = "0";
+    document.getElementById("continue-btn").classList.add("hidden");
 }
 function endRound(){
     isGameRunning = false;
     cancelAnimationFrame(animationFrameId);
 }
 function startNewRound(){
+    document.getElementById("continue-btn").disabled = true;
     if(currentRound < totalRounds && bounceTimes.length > 0){
+        enableButtons();
         currentRound++;
         bounceCount = 0;
         bounceTimes = [];
@@ -124,4 +129,16 @@ function startNewRound(){
         isGameRunning = false;
         resetGame();
     }
+}
+function disableButtons(){
+    const buttons = document.querySelectorAll('#keyboard button');
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+}
+function enableButtons(){
+    const buttons = document.querySelectorAll('#keyboard button');
+    buttons.forEach(button => {
+        button.disabled = false;
+    });
 }
