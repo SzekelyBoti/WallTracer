@@ -7,6 +7,7 @@ let ballDirectionY = Math.random() < 0.5 ? 1 : -1;
 let bounceCount = 0;
 let questionAsked = false;
 let bounceTimes = [];
+let isGameRunning = false;
 
 //Settings
 const ballSpeed = 10;
@@ -17,15 +18,16 @@ const questionBounceIndex = 1;
 
 let score =0;
 let currentRound = 1;
-let totalPossibleScore = totalRounds;
-let startTime;
-let responseTime;
+let startTime, responseTime;
+let animationFrameId;
 
 function setInitialPosition() {
     ball.style.left =`${ballX}px`;
     ball.style.top = `${ballY}px`;
 }
 function moveBall() {
+    if(!isGameRunning) return;
+    
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -49,7 +51,7 @@ function moveBall() {
     ball.style.left = `${ballX}px`;
     ball.style.top = `${ballY}px`;
 
-    requestAnimationFrame(moveBall);
+    animationFrameId = requestAnimationFrame(moveBall);
 }
 function recordBounce(wall) {
     bounceCount++;
@@ -64,50 +66,62 @@ function recordBounce(wall) {
 function askQuestion() {
     questionAsked = true;
     startTime = Date.now();
-    const questionText = `Which wall did the ball bounce off on the ${questionBounceIndex}th bounce?`;
-    setTimeout(() => {
-        const answer = prompt(questionText + " (Enter 'left' , 'right' , 'bottom' , 'top')");
-        responseTime = (Date.now() - startTime) / 1000;
-        checkAnswer(answer);
-    }, 100);
+    document.getElementById("question-text").innerText = `Which wall did the ball touch on bounce nr ${questionBounceIndex}?`;
+    document.getElementById("question-container").classList.remove("hidden");
+}
+function selectAnswer(answer){
+    responseTime = (Date.now() - startTime) / 1000;
+    checkAnswer(answer);
+    document.getElementById("question-container").classList.add("hidden");
 }
 function checkAnswer(answer){
-    const correctAnswer = bounceTimes[questionBounceIndex - 1];
-    if(answer === 'left' || answer === 'right' || answer === 'bottom' || answer === 'top') {
-        const isCorrect = answer.toLowerCase() === correctAnswer;
-        if(isCorrect) {
-            score++;
-        }
-        console.log(`Round ${currentRound}: Answer was ${isCorrect ? 'correct' : 'incorrect'}`);
-        console.log(`Time taken to answer: ${responseTime} seconds`);
-       
-    } else {
-        console.log(`Round ${currentRound}: Answer was ${correctAnswer}`);
-        console.log(`Time taken to answer: ${responseTime} seconds`);
+    if(answer === bounceTimes[questionBounceIndex - 1]){
+        score++;
     }
+    document.getElementById("score").innerText = `${score} / ${totalRounds}`;
+    document.getElementById("response-time").innerText = responseTime.toFixed(2);
 }
-function endRound(){
-    console.log(`Round ${currentRound} finished!`)
-    console.log(`Score so far: ${score}/${totalPossibleScore}`);
 
-    if (currentRound < totalRounds) {
-        setTimeout(startNewRound, 2000);
-    } else {
-        console.log(`Game Over! Final Score: ${score}/${totalPossibleScore}`);
-    }
+function startGame(){
+    document.getElementById("start-btn").style.display = "none";
+    resetGame();
+    isGameRunning = true;
+    moveBall();
 }
-function startNewRound(){
-    currentRound++;
+function resetGame(){
+    score = 0;
+    currentRound = 1;
     bounceCount = 0;
     bounceTimes = [];
     questionAsked = false;
-    
-    ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
-    ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
-    
-    setInitialPosition();
-    
+    document.getElementById("score").innerText = "0";
+    document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
+    document.getElementById("response-time").innerText = "0";
 }
+function endRound(){
+    isGameRunning = false;
+    cancelAnimationFrame(animationFrameId);
+}
+function startNewRound(){
+    if(currentRound < totalRounds && bounceTimes.length > 0){
+        currentRound++;
+        bounceCount = 0;
+        bounceTimes = [];
+        questionAsked = false;
+        document.getElementById("continue-btn").style.display = "inline-block";
+        document.getElementById("round-number").innerText = `${currentRound} / ${totalRounds}`;
 
-//setInitialPosition();
-moveBall();
+        ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
+        ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
+
+        setInitialPosition();
+        isGameRunning = true;
+        moveBall();
+    }else{
+        document.getElementById("continue-btn").style.display = "none";
+        document.getElementById("start-btn").style.display = "inline-block";
+        setInitialPosition();
+        isGameRunning = false;
+        resetGame();
+    }
+}
