@@ -1,22 +1,24 @@
-﻿const ball = document.getElementById("ball");
+﻿//Settings
+const gameConfig = {
+    rounds: [
+        {bounces: 2, questionBounceIndex: 1, ballSpeed: 10},
+        {bounces: 6, questionBounceIndex: 3, ballSpeed: 10},
+        {bounces: 5, questionBounceIndex: 2, ballSpeed: 10},
+    ],
+}
+//settings
+
+const ball = document.getElementById("ball");
 let ballX, ballY;
 let ballDirectionX = Math.random() < 0.5 ? 1 : -1;
 let ballDirectionY = Math.random() < 0.5 ? 1 : -1;
-
 let bounceCount = 0;
 let questionAsked = false;
 let bounceTimes = [];
 let isGameRunning = false;
-
-//Settings
-const ballSpeed = 10;
-const totalRounds = 3;
-const bouncesPerRound = 5;
-const questionBounceIndex = 2;
-//settings
-
+let totalRounds = gameConfig.rounds.length;
 let score =0;
-let currentRound = 1;
+let currentRound = 0;
 let startTime, responseTime;
 let animationFrameId;
 function setInitialPosition() {
@@ -46,8 +48,8 @@ function moveBall() {
         ballDirectionY *= -1;
         recordBounce('top')
     }
-    ballX += ballDirectionX * ballSpeed;
-    ballY += ballDirectionY * ballSpeed;
+    ballX += ballDirectionX * gameConfig.rounds[currentRound].ballSpeed;
+    ballY += ballDirectionY * gameConfig.rounds[currentRound].ballSpeed;
 
     ball.style.left = `${ballX}px`;
     ball.style.top = `${ballY}px`;
@@ -57,12 +59,13 @@ function moveBall() {
 function recordBounce(wall) {
     bounceCount++;
     bounceTimes.push(wall);
-    if(bounceCount === bouncesPerRound && !questionAsked) {
-        askQuestion();
+    const currentRoundConfig = gameConfig.rounds[currentRound];
+    if(bounceCount === currentRoundConfig.bounces && !questionAsked) {
+        askQuestion(currentRoundConfig.questionBounceIndex);
         endRound();
     }
 }
-function askQuestion() {
+function askQuestion(questionBounceIndex) {
     questionAsked = true;
     startTime = Date.now();
     document.getElementById("question-text").innerText = `Which wall did the ball touch on bounce nr ${questionBounceIndex}?`;
@@ -76,7 +79,8 @@ function selectAnswer(answer){
     document.getElementById("continue-btn").classList.remove("hidden");
 }
 function checkAnswer(answer){
-    if(answer === bounceTimes[questionBounceIndex - 1]){
+    const currentRoundConfig = gameConfig.rounds[currentRound];
+    if(answer === bounceTimes[currentRoundConfig.questionBounceIndex - 1]){
         score++;
     }
     document.getElementById("score").innerText = `${score} / ${totalRounds}`;
@@ -84,6 +88,7 @@ function checkAnswer(answer){
 }
 
 function startGame(){
+    document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
     document.getElementById("start-btn").style.display = "none";
     document.getElementById("question-container").classList.add("hidden");
     document.getElementById("continue-btn").classList.add("hidden");
@@ -94,7 +99,7 @@ function startGame(){
 }
 function resetGame(){
     score = 0;
-    currentRound = 1;
+    currentRound = 0;
     bounceCount = 0;
     bounceTimes = [];
     questionAsked = false;
@@ -109,7 +114,7 @@ function endRound(){
     cancelAnimationFrame(animationFrameId);
 }
 function startNewRound(){
-    if(currentRound < totalRounds && bounceTimes.length > 0){
+    if(currentRound < totalRounds -1 && bounceTimes.length > 0){
         enableButtons();
         currentRound++;
         bounceCount = 0;
@@ -117,7 +122,7 @@ function startNewRound(){
         questionAsked = false;
         isGameRunning = true;
         document.getElementById("continue-btn").classList.add("hidden")
-        document.getElementById("round-number").innerText = `${currentRound} / ${totalRounds}`;
+        document.getElementById("round-number").innerText = `${currentRound + 1}/ ${totalRounds}`;
         setInitialPosition();
         moveBall();
     }else{
