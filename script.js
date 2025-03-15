@@ -1,9 +1,9 @@
 ﻿//Settings
 const gameConfig = {
     rounds: [
-        {bounces: 2, questionBounceIndex: 1, ballSpeed: 10},
-        {bounces: 6, questionBounceIndex: 3, ballSpeed: 10},
-        {bounces: 5, questionBounceIndex: 2, ballSpeed: 10},
+        {bounces: 2, questionBounceIndex: 1, ballSpeed: 5},
+        {bounces: 6, questionBounceIndex: 3, ballSpeed: 5},
+        {bounces: 5, questionBounceIndex: 2, ballSpeed: 5},
     ],
 }
 //settings
@@ -145,3 +145,23 @@ function enableButtons(){
         button.disabled = false;
     });
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const fullscreenButton = document.getElementById("fullscreen-btn");
+    fullscreenButton.addEventListener("click", () => {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        }    
+    });
+    function isInFullScreen() {
+        return document.fullscreenElement;
+    }
+    function toggleFullscreenButtonVisibility() {
+        if (isInFullScreen()) {
+            fullscreenButton.style.display = "none";
+        } else {
+            fullscreenButton.style.display = "inline-block";
+        }
+    }
+    document.addEventListener('fullscreenchange', toggleFullscreenButtonVisibility);
+    toggleFullscreenButtonVisibility();
+});
