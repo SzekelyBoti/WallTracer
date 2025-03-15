@@ -12,15 +12,15 @@
     <div id="question-container" class="hidden">
         <p id="question-text"></p>
         <div id="keyboard">
+            <button onClick="selectAnswer('top')">Top</button>
+            <button onClick="selectAnswer('bottom')">Bottom</button>
             <button onClick="selectAnswer('left')">Left</button>
             <button onClick="selectAnswer('right')">Right</button>
-            <button onClick="selectAnswer('top')">Up</button>
-            <button onClick="selectAnswer('bottom')">Down</button>
         </div>
     </div>
     <div id="scoreboard">
-        <p>Round: <span id="round-number">1</span></p>
-        <p>Score: <span id="score">1</span></p>
+        <p>Round: <span id="round-number">0</span></p>
+        <p>Score: <span id="score">0</span></p>
         <p>Response Time: <span id="response-time">0</span></p>
     </div>
 <button id="start-btn" onclick="startGame()">Start Game</button>

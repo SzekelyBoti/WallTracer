@@ -1,6 +1,5 @@
 ﻿const ball = document.getElementById("ball");
-let ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
-let ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
+let ballX, ballY;
 let ballDirectionX = Math.random() < 0.5 ? 1 : -1;
 let ballDirectionY = Math.random() < 0.5 ? 1 : -1;
 
@@ -13,7 +12,7 @@ let isGameRunning = false;
 const ballSpeed = 10;
 const totalRounds = 3;
 const bouncesPerRound = 5;
-const questionBounceIndex = 1;
+const questionBounceIndex = 2;
 //settings
 
 let score =0;
@@ -21,6 +20,9 @@ let currentRound = 1;
 let startTime, responseTime;
 let animationFrameId;
 function setInitialPosition() {
+    ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
+    ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
+    
     ball.style.left =`${ballX}px`;
     ball.style.top = `${ballY}px`;
 }
@@ -55,10 +57,8 @@ function moveBall() {
 function recordBounce(wall) {
     bounceCount++;
     bounceTimes.push(wall);
-    if(bounceCount === questionBounceIndex && !questionAsked) {
+    if(bounceCount === bouncesPerRound && !questionAsked) {
         askQuestion();
-    }
-    if(bounceCount === bouncesPerRound){
         endRound();
     }
 }
@@ -73,7 +73,6 @@ function selectAnswer(answer){
     responseTime = (Date.now() - startTime) / 1000;
     checkAnswer(answer);
     document.getElementById("question-container").classList.add("hidden");
-    document.getElementById("continue-btn").disabled = false;
     document.getElementById("continue-btn").classList.remove("hidden");
 }
 function checkAnswer(answer){
@@ -86,8 +85,11 @@ function checkAnswer(answer){
 
 function startGame(){
     document.getElementById("start-btn").style.display = "none";
-    resetGame();
+    document.getElementById("question-container").classList.add("hidden");
+    document.getElementById("continue-btn").classList.add("hidden");
     isGameRunning = true;
+    enableButtons()
+    resetGame();
     moveBall();
 }
 function resetGame(){
@@ -100,33 +102,29 @@ function resetGame(){
     document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
     document.getElementById("response-time").innerText = "0";
     document.getElementById("continue-btn").classList.add("hidden");
+    setInitialPosition()
 }
 function endRound(){
     isGameRunning = false;
     cancelAnimationFrame(animationFrameId);
 }
 function startNewRound(){
-    document.getElementById("continue-btn").disabled = true;
     if(currentRound < totalRounds && bounceTimes.length > 0){
         enableButtons();
         currentRound++;
         bounceCount = 0;
         bounceTimes = [];
         questionAsked = false;
-        document.getElementById("continue-btn").style.display = "inline-block";
-        document.getElementById("round-number").innerText = `${currentRound} / ${totalRounds}`;
-
-        ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
-        ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
-
-        setInitialPosition();
         isGameRunning = true;
+        document.getElementById("continue-btn").classList.add("hidden")
+        document.getElementById("round-number").innerText = `${currentRound} / ${totalRounds}`;
+        setInitialPosition();
         moveBall();
     }else{
-        document.getElementById("continue-btn").style.display = "none";
+        document.getElementById("continue-btn").classList.add("hidden");
         document.getElementById("start-btn").style.display = "inline-block";
-        setInitialPosition();
         isGameRunning = false;
+        setInitialPosition();
         resetGame();
     }
 }
