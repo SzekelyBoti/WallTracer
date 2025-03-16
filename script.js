@@ -80,7 +80,7 @@ function recordBounce(wall) {
 function askQuestion(questionBounceIndex) {
     questionAsked = true;
     startTime = Date.now();
-    document.getElementById("question-text").innerText = `Which wall did the ball touch on bounce nr ${questionBounceIndex}?`;
+    document.getElementById("question-text").innerText = `Which wall did the ball touch on bounce number ${questionBounceIndex}?`;
     document.getElementById("question-container").classList.remove("hidden");
 }
 
