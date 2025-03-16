@@ -147,6 +147,8 @@ function enableButtons(){
 }
 document.addEventListener('DOMContentLoaded', () => {
     const fullscreenButton = document.getElementById("fullscreen-btn");
+    const helpButton = document.getElementById("help-btn");
+    const closeButton = document.getElementById("close-btn");
     fullscreenButton.addEventListener("click", () => {
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
@@ -162,6 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
             fullscreenButton.style.display = "inline-block";
         }
     }
+    helpButton.addEventListener("click", function() {
+        document.getElementById("instructions-modal").style.display = "flex";
+    });
+
+    closeButton.addEventListener("click", function() {
+        console.log("1")
+        document.getElementById("instructions-modal").style.display = "none";
+    });
     document.addEventListener('fullscreenchange', toggleFullscreenButtonVisibility);
     toggleFullscreenButtonVisibility();
 });
