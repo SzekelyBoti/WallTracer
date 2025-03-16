@@ -12,3 +12,4 @@
 2025-03-15 | Implement different nr of bounces per round | 40 min | Added different nr of bounces pre round which can be set in settings , we can also change the ball speed and question index.
 2025-03-15 | Implemented fullscreen option and button | 25 min | Implemented fullscreen mode
 2025-03-16 | Added Help section | 10 min | Implemented help button and ui for instructions on how to play the game.
+2025-03-16 | Improved the ui and presentation | 40min | Improved the general css for nicer ui and presentation.
