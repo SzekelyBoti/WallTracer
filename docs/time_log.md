@@ -11,3 +11,4 @@
 2025-03-15 | Fixed question timing and buttons showing | 40min | Fixed issue where the question would show before the nr of bounces happaned, fixed issue where buttons would sometimes now show
 2025-03-15 | Implement different nr of bounces per round | 40 min | Added different nr of bounces pre round which can be set in settings , we can also change the ball speed and question index.
 2025-03-15 | Implemented fullscreen option and button | 25 min | Implemented fullscreen mode
+2025-03-16 | Added Help section | 10 min | Implemented help button and ui for instructions on how to play the game.
