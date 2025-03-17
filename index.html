@@ -26,6 +26,7 @@
 <button id="start-btn" onclick="startGame()">Start Game</button>
 <button id="continue-btn" onclick="startNewRound()" class="hidden">Continue</button>
 <button id="fullscreen-btn">Fullscreen</button>
+<button id="exitFs-btn">Exit Fullscreen</button> 
 <button id="help-btn">Help</button>
 <div id="instructions-modal" class="hidden">
     <div id="instructions-content">
@@ -36,6 +37,10 @@
         <p>4. Your score will be based on guessing the right wall the ball bounced on.</p>
         <button id="close-btn">Close</button>
     </div>
+</div>
+ <div id="score-screen" class="hidden">
+     <h2 id="final-score"></h2>
+     <button id="reset-btn" class="hidden">Reset Game</button>
 </div>
 </body>
 </html>

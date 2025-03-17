@@ -12,10 +12,9 @@ const gameConfig = {
         {bounces: 5, questionBounceIndex: 2, ballSpeed: 5},
     ],
 }
-//settings
+//End of Settings
 
-const ball = document.getElementById("ball");
-let ballX, ballY, startTime, responseTime, animationFrameId;
+let ball, ballX, ballY, startTime, responseTime, animationFrameId;
 let ballDirectionX = Math.random() < 0.5 ? 1 : -1;
 let ballDirectionY = Math.random() < 0.5 ? 1 : -1;
 let bounceCount = 0;
@@ -80,7 +79,7 @@ function recordBounce(wall) {
 function askQuestion(questionBounceIndex) {
     questionAsked = true;
     startTime = Date.now();
-    document.getElementById("question-text").innerText = `Which wall did the ball touch on bounce number ${questionBounceIndex}?`;
+    document.getElementById("question-text").innerText = `Which wall did the ball hit on bounce number ${questionBounceIndex}?`;
     document.getElementById("question-container").classList.remove("hidden");
 }
 
@@ -89,24 +88,29 @@ function selectAnswer(answer){
     disableButtons();
     responseTime = (Date.now() - startTime) / 1000;
     checkAnswer(answer);
-    document.getElementById("question-container").classList.add("hidden");
-    document.getElementById("continue-btn").classList.remove("hidden");
+    setTimeout(() => {
+        document.getElementById("question-container").classList.add("hidden");
+        document.getElementById("continue-btn").classList.remove("hidden");
+    }, 1500);
 }
 
 // Check if the player's answer is correct and update the score
 function checkAnswer(answer){
     const currentRoundConfig = gameConfig.rounds[currentRound];
+    const correctAnswer = bounceTimes[currentRoundConfig.questionBounceIndex - 1];
+    highlightCorrectAnswer(correctAnswer);
     if(answer === bounceTimes[currentRoundConfig.questionBounceIndex - 1]){
         score++;
     }
     document.getElementById("score").innerText = `${score} / ${totalRounds}`;
     document.getElementById("response-time").innerText = responseTime.toFixed(2);
+    
 }
 
 // Start the game, resetting the score and other game parameters
 function startGame(){
     document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
-    document.getElementById("start-btn").style.display = "none";
+    document.getElementById("start-btn").classList.add("hidden");
     document.getElementById("question-container").classList.add("hidden");
     document.getElementById("continue-btn").classList.add("hidden");
     isGameRunning = true;
@@ -117,6 +121,9 @@ function startGame(){
 
 // Reset the game state and score for a new game
 function resetGame(){
+    
+    document.getElementById("score-screen").classList.add("hidden");
+    document.getElementById("reset-btn").classList.add("hidden");
     score = 0;
     currentRound = 0;
     bounceCount = 0;
@@ -126,13 +133,21 @@ function resetGame(){
     document.getElementById("round-number").innerText = `1 / ${totalRounds}`;
     document.getElementById("response-time").innerText = "0";
     document.getElementById("continue-btn").classList.add("hidden");
-    setInitialPosition()
+    setInitialPosition();
+    //document.getElementById("start-btn").classList.remove("hidden");
 }
 
 // End the current round and stop the ball movement
 function endRound(){
     isGameRunning = false;
     cancelAnimationFrame(animationFrameId);
+}
+
+function endGame(){
+    document.getElementById("continue-btn").classList.add("hidden");
+    document.getElementById("score-screen").classList.remove("hidden");
+    document.getElementById("final-score").innerText = `Your Final Score: ${score} / ${totalRounds}`;
+    document.getElementById("reset-btn").classList.remove("hidden");
 }
 
 // Start a new round if possible or reset the game if all rounds are completed
@@ -148,13 +163,23 @@ function startNewRound(){
         document.getElementById("round-number").innerText = `${currentRound + 1}/ ${totalRounds}`;
         setInitialPosition();
         moveBall();
-    }else{
-        document.getElementById("continue-btn").classList.add("hidden");
-        document.getElementById("start-btn").style.display = "inline-block";
-        isGameRunning = false;
-        setInitialPosition();
-        resetGame();
+    } else {
+        endGame(); 
     }
+}
+// Highlight correct answer
+function highlightCorrectAnswer(correctAnswer) {
+    document.querySelectorAll("#keyboard button").forEach((button) => {
+        let buttonText = button.textContent.trim().toLowerCase();
+        if (buttonText === correctAnswer.toLowerCase()) {
+            button.classList.add("correct-answer");
+        }
+    });
+    setTimeout(() => {
+        document.querySelectorAll("#keyboard button").forEach((button) => {
+            button.classList.remove("correct-answer");
+        });
+    }, 1500);
 }
 
 // Disable the answer buttons during the question period
@@ -175,22 +200,31 @@ function enableButtons(){
 
 // Event listeners for the game UI elements
 document.addEventListener('DOMContentLoaded', () => {
+    ball = document.getElementById("ball");
     const fullscreenButton = document.getElementById("fullscreen-btn");
     const helpButton = document.getElementById("help-btn");
     const closeButton = document.getElementById("close-btn");
+    const exitFsButton = document.getElementById("exitFs-btn");
     fullscreenButton.addEventListener("click", () => {
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
         }    
     });
+    exitFsButton.addEventListener("click", () => {
+        if(document.fullscreenElement){
+            document.exitFullscreen();
+        }
+    })
     function isInFullScreen() {
         return document.fullscreenElement;
     }
     function toggleFullscreenButtonVisibility() {
         if (isInFullScreen()) {
             fullscreenButton.style.display = "none";
+            exitFsButton.style.display = "inline-block";
         } else {
             fullscreenButton.style.display = "inline-block";
+            exitFsButton.style.display = "none";
         }
     }
     helpButton.addEventListener("click", function() {
@@ -198,9 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeButton.addEventListener("click", function() {
-        console.log("1")
         document.getElementById("instructions-modal").style.display = "none";
     });
     document.addEventListener('fullscreenchange', toggleFullscreenButtonVisibility);
     toggleFullscreenButtonVisibility();
+    document.getElementById("reset-btn").addEventListener("click", () => {
+        document.getElementById("start-btn").classList.remove("hidden");
+        resetGame();
+    });
 });
