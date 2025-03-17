@@ -15,6 +15,52 @@ body, html {
     position: relative;
     font-family: 'Arial', sans-serif;
 }
+#score-screen {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    width: 80%;
+    max-width: 400px;
+    color: #d0e2f2;
+}
+
+#final-score {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#reset-btn {
+    background-color: #d0e2f2;
+    color: #333;
+    padding: 15px 40px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 15px rgba(208, 226, 242, 0.7);
+    margin-top: 10px;
+}
+
+#reset-btn:hover {
+    background-color: #f1a7c9;
+    transform: scale(1.05);
+}
+
+#reset-btn:active {
+    background-color: #d0e2f2;
+}
+
+#score-screen, #reset-btn {
+    justify-content: center;
+    align-items: center;
+}
 
 #ball {
     position: absolute;
@@ -43,6 +89,10 @@ body, html {
     font-size: 1.2em;
     color: #d0e2f2;
     margin-bottom: 10px;
+}
+#keyboard button.correct-answer {
+    background-color: green !important;
+    color: white !important;
 }
 
 #keyboard {
@@ -75,7 +125,7 @@ body, html {
 
 #scoreboard {
     position: absolute;
-    bottom: 3.5%;
+    top: 3.5%;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
@@ -111,7 +161,7 @@ body, html {
     transform: scale(1.05);
 }
 
-#fullscreen-btn, #help-btn {
+#fullscreen-btn, #help-btn, #exitFs-btn {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
@@ -121,15 +171,18 @@ body, html {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
+#exitFs-btn {
+    display: none;
+}
 
-#fullscreen-btn {
-    bottom: 3.6%;
-    left: 64%;
+#fullscreen-btn, #exitFs-btn {
+    top: 3.3%;
+    right: 1%;
 }
 
 #help-btn {
-    bottom: 3.6%;
-    left: 33%;
+    top: 3.3%;
+    left: 1%;
 }
 
 #fullscreen-btn:hover, #help-btn:hover {
