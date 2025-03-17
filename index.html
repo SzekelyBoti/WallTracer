@@ -8,7 +8,8 @@
 </head>
 <body>
     <div id="ball"></div>
-    <script src="script.js"></script>
+    <script src="gameLogic.js"></script>
+    <script src="domManipulation.js"></script>
     <div id="question-container" class="hidden">
         <p id="question-text"></p>
         <div id="keyboard">
@@ -23,8 +24,8 @@
         <p>Score: <span id="score">0</span></p>
         <p>Response Time: <span id="response-time">0</span></p>
     </div>
-<button id="start-btn" onclick="startGame()">Start Game</button>
-<button id="continue-btn" onclick="startNewRound()" class="hidden">Continue</button>
+<button id="start-btn">Start Game</button>
+<button id="continue-btn" class="hidden">Continue</button>
 <button id="fullscreen-btn">Fullscreen</button>
 <button id="exitFs-btn">Exit Fullscreen</button> 
 <button id="help-btn">Help</button>
