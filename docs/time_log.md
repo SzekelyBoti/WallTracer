@@ -14,3 +14,6 @@
 2025-03-16 | Added Help section | 10 min | Implemented help button and ui for instructions on how to play the game.
 2025-03-16 | Improved the ui and presentation | 40min | Improved the general css for nicer ui and presentation.
 2025-03-16 | Refactored code , added comments | 15min | Small refactor and added comments.
+2025-03-17 | Implement missing ui elements | 20min | Added missing exit fullscreen button and final score scree with reset button
+2025-03-17 | BIG code refactor | 1hr | Code refactor split script.js into domManipulation.js and gameLogic.js also removed index.html event listeners and added them to domManipulation.js
+2025-03-18 | Implement tests | 2 hr  | Implemented 3 tests for logic and 3 tests for ui , ran into many issue with js test suite.
