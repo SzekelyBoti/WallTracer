@@ -39,7 +39,7 @@
 
     Clone the repository to your local machine:
 
-      git clone https://github.com/yourusername/WallTracer.git
+      git clone https://github.com/SzekelyBoti/WallTracer.git
       cd WallTracer
 
   # Install dependencies:
@@ -120,12 +120,12 @@
 
     The project includes two main categories of tests:
 
-      Game Logic Tests:
+      Game Engine Tests:
           setInitialPosition: Verifies that the ball starts at the correct position on the screen.
           recordBounce: Ensures that the bounce count increases when the ball hits a wall.
           startGame: Checks that the game starts with the correct initial parameters (e.g., score, round number).
 
-      DOM Manipulation Tests:
+      DOM Helper Tests:
           showElement: Ensures elements are displayed when the hidden class is removed.
           hideElement: Verifies elements are hidden by adding the hidden class.
           updateScore: Confirms that the score is displayed correctly on the screen.
@@ -153,13 +153,13 @@
 
         npm install
 
-      Make changes to the JavaScript files in the domManipulation.js and gameLogic.js files.
+      Make changes to the JavaScript files in the domHelper.js and gameEngine.js files.
 
       If you plan to use these files for testing or as an external module, ensure you have exported the necessary functions in both files.
 
   # Export Setup:
 
-    In domManipulation.js, export the functions at the end of the file like so:
+   # In domHelper.js, export the functions at the end of the file like so:
 
       module.exports = {
       showInstructionsModal,
@@ -180,11 +180,11 @@
       enableButtons
       };
 
-   # In gameLogic.js, make sure you are exporting the necessary functions as well:
+   # In gameEngine.js, make sure you are exporting the necessary functions as well:
 
       At the top of the file:
 
-         const { showInstructionsModal, hideInstructionsModal, ... } = require('./domManipulation');
+         const { showInstructionsModal, hideInstructionsModal, ... } = require('./domHelper');
 
       At the end of the file:
 

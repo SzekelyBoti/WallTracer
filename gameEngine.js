@@ -98,7 +98,7 @@ function startGame() {
     resetGame();
     hideElement("continue-btn");
     hideElement("start-btn");
-    moveBall(document.getElementById("ball"));
+    moveBall(ball);
 }
 function resetGame() {
     score = 0;
@@ -112,7 +112,7 @@ function resetGame() {
     hideElement("continue-btn");
     hideElement("score-screen");
     showElement("start-btn");
-    setInitialPosition(document.getElementById("ball"));
+    setInitialPosition(ball);
 }
 function endRound() {
     isGameRunning = false;
@@ -132,8 +132,8 @@ function startNewRound() {
         isGameRunning = true;
         hideElement("continue-btn");
         updateRoundNumber(currentRound, totalRounds);
-        setInitialPosition(document.getElementById("ball"));
-        moveBall(document.getElementById("ball"));
+        setInitialPosition(ball);
+        moveBall(ball);
     } else {
         endGame();
     }

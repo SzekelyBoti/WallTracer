@@ -18,3 +18,4 @@
 2025-03-17 | BIG code refactor | 1hr | Code refactor split script.js into domManipulation.js and gameLogic.js also removed index.html event listeners and added them to domManipulation.js
 2025-03-18 | Implement tests | 2 hr  | Implemented 3 tests for logic and 3 tests for ui , ran into many issue with js test suite.
 2025-03-18 | Add detailed readme | 1hr | Add detailed documentation for the project.
+2025-03-19 | Small cleanup | 15min | Changed the names of the .js files , removed handleClicks from the html file

@@ -17,6 +17,10 @@
     document.getElementById("reset-btn").addEventListener("click", resetGame);
     document.getElementById("start-btn").addEventListener("click", startGame);
     document.getElementById("continue-btn").addEventListener("click", startNewRound);
+    document.getElementById('btn-top').addEventListener('click', () => selectAnswer('top'));
+    document.getElementById('btn-bottom').addEventListener('click', () => selectAnswer('bottom'));
+    document.getElementById('btn-left').addEventListener('click', () => selectAnswer('left'));
+    document.getElementById('btn-right').addEventListener('click', () => selectAnswer('right'));
 });
 function showInstructionsModal() {
     const modal = document.getElementById("instructions-modal");
