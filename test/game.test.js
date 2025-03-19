@@ -38,14 +38,14 @@ before(() => {
 });
 
 describe('Game Logic Tests', () => {
-    let domManipulation;
-    let gameLogic;
+    let domHelper;
+    let gameEngine;
     let ballElement;
 
     beforeEach(() => {
         ballElement = document.getElementById('ball');
-        domManipulation = require('../domManipulation');
-        gameLogic = require('../gameLogic');
+        domHelper = require('../domHelper');
+        gameEngine = require('../gameEngine');
     });
 
     afterEach(() => {
@@ -53,7 +53,7 @@ describe('Game Logic Tests', () => {
     });
 
     it('should set the initial position of the ball', () => {
-        gameLogic.setInitialPosition(ballElement);
+        gameEngine.setInitialPosition(ballElement);
 
         const ballLeft = parseInt(ballElement.style.left);
         const ballTop = parseInt(ballElement.style.top);
@@ -63,9 +63,9 @@ describe('Game Logic Tests', () => {
     });
 
     it('should record a bounce when the ball hits a wall', () => {
-        gameLogic.recordBounce('right');
-        expect(gameLogic.gameConfig.rounds[0].bounces).to.equal(2);
-        expect(gameLogic.gameConfig.rounds[0].questionBounceIndex).to.equal(1);
+        gameEngine.recordBounce('right');
+        expect(gameEngine.gameConfig.rounds[0].bounces).to.equal(2);
+        expect(gameEngine.gameConfig.rounds[0].questionBounceIndex).to.equal(1);
     });
 
     it('should start a game and reset game parameters', () => {
@@ -82,11 +82,11 @@ describe('Game Logic Tests', () => {
             return elementMock;
         });
 
-        gameLogic.startGame();
+        gameEngine.startGame();
 
-        expect(gameLogic.totalRounds).to.equal(3);
-        expect(gameLogic.score).to.equal(0);
-        expect(gameLogic.currentRound).to.equal(0);
+        expect(gameEngine.totalRounds).to.equal(3);
+        expect(gameEngine.score).to.equal(0);
+        expect(gameEngine.currentRound).to.equal(0);
 
         expect(elementMock.classList.add.calledWith('hidden')).to.be.true;
         expect(elementMock.classList.remove.calledWith('hidden')).to.be.true;
@@ -96,15 +96,15 @@ describe('Game Logic Tests', () => {
 });
 
 describe('DOM Manipulation Tests', () => {
-    let domManipulation;
-    let gameLogic;
+    let domHelper;
+    let gameEngine;
     let ballElement;
     let elementMock;
 
     before(() => {
         ballElement = document.getElementById('ball');
-        domManipulation = require('../domManipulation');
-        gameLogic = require('../gameLogic');
+        domHelper = require('../domHelper');
+        gameEngine = require('../gameEngine');
     });
 
     beforeEach(() => {
@@ -129,22 +129,22 @@ describe('DOM Manipulation Tests', () => {
     });
 
     it('should show an element by removing the hidden class', () => {
-        domManipulation.showElement('score');
+        domHelper.showElement('score');
         expect(elementMock.classList.remove.calledWith('hidden')).to.be.true;
     });
 
     it('should hide an element by adding the hidden class', () => {
-        domManipulation.hideElement('score');
+        domHelper.hideElement('score');
         expect(elementMock.classList.add.calledWith('hidden')).to.be.true;
     });
 
     it('should update the score on the screen', () => {
-        domManipulation.updateScore(100);
+        domHelper.updateScore(100);
         expect(elementMock.innerText).to.equal('100');
     });
 
     it('should update the response time on the screen', () => {
-        domManipulation.updateResponseTime(30);
+        domHelper.updateResponseTime(30);
         expect(elementMock.innerText).to.equal('30.00');
     });
 });

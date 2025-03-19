@@ -8,15 +8,15 @@
 </head>
 <body>
     <div id="ball"></div>
-    <script src="gameLogic.js"></script>
-    <script src="domManipulation.js"></script>
+    <script src="gameEngine.js"></script>
+    <script src="domHelper.js"></script>
     <div id="question-container" class="hidden">
         <p id="question-text"></p>
         <div id="keyboard">
-            <button onClick="selectAnswer('top')">Top</button>
-            <button onClick="selectAnswer('bottom')">Bottom</button>
-            <button onClick="selectAnswer('left')">Left</button>
-            <button onClick="selectAnswer('right')">Right</button>
+            <button id="btn-top">Top</button>
+            <button id="btn-bottom">Bottom</button>
+            <button id="btn-left">Left</button>
+            <button id="btn-right">Right</button>
         </div>
     </div>
     <div id="scoreboard">
